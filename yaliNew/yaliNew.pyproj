@@ -65,6 +65,7 @@
     <Content Include="yaliNew\static\scripts\respond.min.js" />
     <Content Include="yaliNew\static\scripts\_references.js" />
     <Content Include="yaliNew\templates\about.html" />
+    <Content Include="yaliNew\templates\photo.html" />
     <Content Include="yaliNew\templates\contact.html" />
     <Content Include="yaliNew\templates\index.html" />
     <Content Include="yaliNew\templates\layout.html" />
