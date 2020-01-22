@@ -46,3 +46,14 @@ def photo():
         year=datetime.now().year,
         message='Your application description page.'
     )
+
+
+@app.route('/query')
+def query():
+    """Renders the about page."""
+    return render_template(
+        'query.html',
+        title='query',
+        year=datetime.now().year,
+        message='Your application description page.'
+    )
