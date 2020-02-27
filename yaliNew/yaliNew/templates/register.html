@@ -1,0 +1,125 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+<h1 style="background-color:green; color:white;">{{ title }}</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for message in messages %}
+<h3>{{ message[1] }}</h3>
+<br />
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+<br />
+<br />
+<br />
+
+<form method=post>
+    {{ form.csrf }}
+    {{ form.csrf_token }}
+    <table>
+        <tr>
+            <td>
+                {{ form.FirstName.label }}
+            </td>
+            <td>
+                {{ form.FirstName }}
+            </td>
+            <td>
+                {% if form.FirstName.errors %}
+                <ul class="text-danger">{% for error in form.FirstName.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.LastName.label }}
+            </td>
+            <td>
+                {{ form.LastName }}
+            </td>
+            <td>
+                {% if form.LastName.errors %}
+                <ul class="text-danger">{% for error in form.LastName.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.PhoneNum.label }}
+            </td>
+            <td>
+                {{ form.PhoneNum }}
+            </td>
+            <td>
+                {% if form.PhoneNum.errors %}
+                <ul class="text-danger">{% for error in form.PhoneNum.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.EmailAddr.label }}
+            </td>
+            <td>
+                {{ form.EmailAddr }}
+            </td>
+            <td>
+                {% if form.EmailAddr.errors %}
+                <ul class="text-danger">{% for error in form.EmailAddr.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.username.label }}
+            </td>
+            <td>
+                {{ form.username }}
+            </td>
+            <td>
+                {% if form.username.errors %}
+                <ul class="text-danger">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.password.label }}
+            </td>
+            <td>
+                {{ form.password }}
+            </td>
+            <td>
+                {% if form.password.errors %}
+                <ul class="text-danger">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <div class="input submit">
+                    <input type="submit" value="Register">
+                </div>
+            <td>
+            <td></td>
+        </tr>
+    </table>
+</form>
+
+<style>
+    td, tr, table {
+        font-size: 22px
+    }
+
+    h2 {
+        position: relative;
+        left: 450px;
+    }
+</style>
+<img src="https://lh3.googleusercontent.com/proxy/URT7F74XNuYJdkfYJ4PO6D8jTN6YZRCSHm1mNnGzRM6y3UjNgOV8Szb4BC3oORyUrgpHAAw5F7epIII5B3knbGMmb64OiPYa9jq8eesAkXdqfHRuG6C4I8n8Pob7" style="width:1110px; height:500px;">
+    {% endblock %}

@@ -1,0 +1,41 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+<h1 style="background-color:red; color:white;">{{ title }}</h1>
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12" style="background-color: dodgerblue">
+            <p style="color:white">
+                I decide to use one dataset to examine this topic and help users to undersend the phenomena. The Olympic Games are global events of multi-industry sports competitions that are held once every two years - once summer games and once winter games. The Olympic Games are attended by the best athletes from all over the world, so most of the Olympic Games are considered peak events. The Olympic Summer Games are the world's largest sporting event in terms of participation, the second largest media event in the world (after the World Cup). Summer games take place every four years in the summer, while the relatively limited winter games take place two years after each Olympic summer in winter.
+                I chose this topic knowing that I will connect to this topic specifically. I like to play football and play in the Hapoel Herzliya team. Plus, since I was young I always waited for an Olympics to happen and watched all the Olympics ever since. Moreover, these events are global that are broadcast all over the world - showing their worldwide support. Moreover, these events are the events with the largest participants in the world. Therefore, I was particularly connected to this topic and wanted to research it and test the data that I am offered.
+
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12" style="background-color: yellow">
+            <img src="https://idrottsforum.org/wp-content/uploads/2019/02/winter-olympics.jpg" width="350" height="350" />
+            <img src="https://herviewfromhome.com/wp-content/uploads/2016/08/olympics.jpg" width="350" height="350" />
+            <img src="https://cms.qz.com/wp-content/uploads/2016/08/discus-thrower.jpg?quality=75&strip=all&w=1600&h=900&crop=1" width="350" height="350" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4" style="background-color: black">
+            <p style="color:white">Olympic_Athlets</p>
+        </div>
+        <div class="col-lg-4" style="background-color: green">
+            <p style="color:white">The source of this database is a <span><a href="https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results">kaggle site</a></span> which maintains a large number of databases, especially the Olympic Games. The site was created by Anthony Goldblum and Ben Hammer. At this time, Google maintains the site and maintains its functioning after it was acquired on March 8, 2017. Therefore, the site is particularly trusted because we know that its maintainers are exceptionally reliable (Google). In 2017, the site counted one million registered users from 194 different countries - it is the world's largest and most diverse data community.</pstyle="color:white">
+        </div>
+        <div class="col-lg-4" style="background-color: greenyellow">
+            <p style="color:white"><a href="{{ url_for('DataSet1') }}">Go To DataSet Page</a></p>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

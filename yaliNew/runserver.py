@@ -1,5 +1,5 @@
 """
-This script runs the yaliNew application using a development server.
+This script runs the DemoFormProject application using a development server.
 """
 
 from os import environ
@@ -12,6 +12,5 @@ if __name__ == '__main__':
     except ValueError:
         PORT = 5555
 
-    app.config['secret key'] = 'Yali Yacobi'
+    app.config['SECRET_KEY'] = 'All You Need Is Love Ta ta ta ta ta'
     app.run(HOST, PORT)
-    
