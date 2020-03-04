@@ -68,7 +68,7 @@ def About():
 @app.route('/Register', methods=['GET', 'POST'])
 def Register():
     form = UserRegistrationFormStructure(request.form)
-
+    #ha
     if (request.method == 'POST' and form.validate()):
         if (not db_Functions.IsUserExist(form.username.data)):
             db_Functions.AddNewUser(form)
