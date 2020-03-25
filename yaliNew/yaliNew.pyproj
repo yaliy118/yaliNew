@@ -82,6 +82,8 @@
     <Content Include="yaliNew\templates\Contact.html" />
     <Content Include="yaliNew\templates\Index.html" />
     <Content Include="yaliNew\templates\layout.html" />
+    <Content Include="yaliNew\templates\Login.html" />
+    <Content Include="yaliNew\templates\Query.html" />
     <Content Include="yaliNew\templates\Register.html" />
   </ItemGroup>
   <ItemGroup>

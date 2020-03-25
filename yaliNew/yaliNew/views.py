@@ -32,7 +32,8 @@ from wtforms import TextField, TextAreaField, SubmitField, SelectField, DateFiel
 from wtforms import ValidationError
 
 from yaliNew.Models.QueryFormStructure import UserRegistrationFormStructure 
-
+from yaliNew.Models.QueryFormStructure import LoginFormStructure 
+from yaliNew.Models.QueryFormStructure import QueryFormStructure
 db_Functions = create_LocalDatabaseServiceRoutines() 
 
 
@@ -75,7 +76,7 @@ def Register():
             db_table = ""
 
             flash('Thanks for registering new user - '+ form.FirstName.data + " " + form.LastName.data )
-            # Here you should put what to do (or were to go) if registration was good
+            return redirect('DataModel')
         else:
             flash('Error: User with this Username already exist ! - '+ form.username.data)
             form = UserRegistrationFormStructure(request.form)
@@ -113,3 +114,57 @@ def DataSet1():
         year=datetime.now().year,
         message='Data Set'
     )
+
+
+@app.route('/Login', methods=['GET', 'POST'])
+def Login():
+    form = LoginFormStructure(request.form)
+
+    if (request.method == 'POST' and form.validate()):
+        if (db_Functions.IsLoginGood(form.username.data, form.password.data)):
+            flash('Login approved!')
+            return redirect('DataModel')
+        else:
+            flash('Error in - Username and/or password')
+   
+    return render_template(
+        'login.html', 
+        form=form, 
+        title='Log in',
+        year=datetime.now().year,
+        repository_name='Pandas',
+        )
+
+
+@app.route('/Query', methods=['GET', 'POST'])
+def Query():
+    athlete = None
+    sport = None
+    Name = ''
+    Sport = ''
+    df = pd.read_csv(path.join(path.dirname(__file__), 'static\\Data\\Olympic_athlets.csv'))
+    df = df.set_index('Name')
+
+    form = QueryFormStructure(request.form)
+     
+    if (request.method == 'POST' ):
+        name = form.name.data
+        if (name in df.index):
+            Sport = df.loc[name,'Sport']
+        else:
+            Sport = name + ', no such athlete'
+        Name = name
+        form.name.data = ''
+        
+
+    raw_data_table = df.head().to_html(classes = 'table table-hover')
+
+    return render_template('Query.html', 
+            form = form,
+            sport = Sport,
+            athlete = Name,
+            raw_data_table = raw_data_table,
+            title='Query',
+            year=datetime.now().year,
+            message='This page will use the web forms to get user input'
+        )

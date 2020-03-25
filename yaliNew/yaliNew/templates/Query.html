@@ -1,0 +1,32 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+<h1 style="background-color:orangered; color:black;">{{ title }}</h1>
+<p> </p>
+<form method=post>
+    {{ form.csrf }}
+    <table>
+        <tr>
+            <td class="input text"><h2>{{ form.name.label }} </h2></td>
+            <td><h2>                   {{ form.name }}       </h2></td>
+        </tr>
+        <tr>
+            <td>
+                <button class="btn btn-success" style="background-color:orangered">Sport</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<p><h1>The Sport who <b>{{ athlete }}</b> Competed is : <b>{{sport}}</b></h1></p>
+
+<h3> Table is: </h3>
+{{ raw_data_table | safe}}
+
+
+
+
+    {% endblock %}
+
+

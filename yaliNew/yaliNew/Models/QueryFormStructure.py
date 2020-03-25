@@ -22,7 +22,7 @@ from wtforms.validators import DataRequired
 ##   the 'submit' button - the button the user will press to have the 
 ##                         form be "posted" (sent to the server for process)
 class QueryFormStructure(FlaskForm):
-    name   = StringField('Country Name:  ' , validators = [DataRequired()])
+    name   = StringField('athlete:  ' , validators = [DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -36,10 +36,7 @@ class QueryFormStructure(FlaskForm):
 ##   the 'password' field - will be used to get the password
 ##   the 'submit' button - the button the user will press to have the 
 ##                         form be "posted" (sent to the server for process)
-class LoginFormStructure(FlaskForm):
-    username   = StringField('User name:  ' , validators = [DataRequired()])
-    password   = PasswordField('Pass word:  ' , validators = [DataRequired()])
-    submit = SubmitField('Submit')
+
 
 
 
@@ -56,14 +53,18 @@ class LoginFormStructure(FlaskForm):
 ##   the 'submit' button - the button the user will press to have the 
 ##                         form be "posted" (sent to the server for process)
 class UserRegistrationFormStructure(FlaskForm):
-    FirstName  = StringField('First name:  ' , validators = [DataRequired()])
-    LastName   = StringField('Last name:  ' , validators = [DataRequired()])
+    FirstName  = StringField('First name:  ' , [validators.Length(min=2)])
+    LastName   = StringField('Last name:  ' , [validators.Length(min=2)])
     PhoneNum   = StringField('Phone number:  ' , validators = [DataRequired()])
-    EmailAddr  = StringField('E-Mail:  ' , validators = [DataRequired()])
+    EmailAddr  = StringField('E-Mail:  ' , [validators.Email()])
     username   = StringField('User name:  ' , validators = [DataRequired()])
-    password   = PasswordField('Pass word:  ' , validators = [DataRequired()])
+    password   = PasswordField('Pass word:  ' , [validators.Length(min=5)])
     submit = SubmitField('Submit')
 
+class LoginFormStructure(FlaskForm):
+    username = StringField('username:  ' , validators = [DataRequired()])
+    password = StringField('password:  ' , validators = [DataRequired()])
+    submit = SubmitField('Submit')
 ## This class have the fields that the user can set, to have the query parameters for analysing the data
 ##   This form is where the user can set different parameters, depand on your project,
 ##   that will be used to do the data analysis (using Pandas etc.)
@@ -75,5 +76,4 @@ class UserRegistrationFormStructure(FlaskForm):
 #class DataParametersFormStructure(FlaskForm):
 #    
 #    submit = SubmitField('Submit')
-
 
