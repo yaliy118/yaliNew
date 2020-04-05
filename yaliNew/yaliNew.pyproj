@@ -39,8 +39,12 @@
     <Compile Include="yaliNew\Models\QueryFormStructure.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="yaliNew\__init__.py" />
-    <Compile Include="yaliNew\views.py" />
+    <Compile Include="yaliNew\views.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="yaliNew\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="yaliNew\" />

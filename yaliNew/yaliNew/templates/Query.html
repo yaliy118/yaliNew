@@ -1,9 +1,8 @@
 ﻿{% extends "layout.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
-
+{%import "bootstrap/wtf.html" as wtf%}
 {% block content %}
 
-<h1>{{ title }}</h1>
+<h1 style="background-color:lightblue; color:black;">{{ title }}</h1>
 
 <div class="row">
 
@@ -11,8 +10,8 @@
         <form method="post">
             {{ form1.csrf_token }}
             {{ wtf.form_field(form1.NOC) }}
-            {{ wtf.form_field(form1.start_date) }}
-            {{ wtf.form_field(form1.end_date) }}
+            {{ wtf.form_field(form1.StartYear) }}
+            {{ wtf.form_field(form1.EndYear) }}
             {{ wtf.form_field(form1.KindofGraph) }}
             <input class="btn btn-primary" type="submit" value="submit">
         </form>
@@ -24,7 +23,4 @@
         </div>
     </div>
 </div>
-
-
-
         {% endblock %}

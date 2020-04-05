@@ -34,12 +34,16 @@ from wtforms import ValidationError
 from yaliNew.Models.QueryFormStructure import UserRegistrationFormStructure 
 from yaliNew.Models.QueryFormStructure import LoginFormStructure 
 from yaliNew.Models.QueryFormStructure import QueryFormStructure
+from yaliNew.Models.QueryFormStructure import OlympicMedals
 db_Functions = create_LocalDatabaseServiceRoutines() 
 
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-from MyFinalProject.Models.plot_service_functions import plot_to_img.
+from yaliNew.Models.plot_service_functions import plot_to_img
+from yaliNew.Models.plot_service_functions import get_NOC_choices
 
+from flask_bootstrap import Bootstrap
+bootstrap = Bootstrap(app)
 
 @app.route('/')
 def Home():
@@ -140,73 +144,94 @@ def Login():
         )
 
 
-@app.route('/query' , methods = ['GET' , 'POST'])
-def query():
+#@app.route('/query' , methods = ['GET' , 'POST'])
+#def query():
 
-    print("Query")
+ #   print("Query")
 
-    form1 = OlympicMedals()
+  #  form1 = OlympicMedals()
 
-    df = pd.read_csv(path.join(path.dirname(__file__), 'static/Data/Olympic_athlets.csv'))
+   # df = pd.read_csv(path.join(path.dirname(__file__), 'static/Data/Olympic_athlets.csv'))
 
 
-    NOC_choices = get_NOC_choices(df)
-    form1.NOC.choices = NOC_choices
+    #NOC_choices = get_NOC_choices(df)
+    #form1.NOC.choices = NOC_choices
    
     
 
-    if request.method == 'POST':
-        NOC = form1.NOC.data 
-        KindofMedal = form1.KindofMedal.data
-        KindofGraph = form1.KindofGraph.data
+    #if request.method == 'POST':
+     #   NOC = form1.NOC.data 
+      #  KindofMedal = form1.KindofMedal.data
+       # KindofGraph = form1.KindofGraph.data
         
-        df_new = covid19_day_ratio(df , NOC , KindofMedal)
-        fig = plt.figure()
-        fig.subplots_adjust(bottom=0.4)
-        ax = fig.add_subplot(111)
-        ax.set_ylim(0 , 3)
-        df_tmp.plot(ax = ax , kind = KindofGraph, figsize = (32, 14) , fontsize = 22 , grid = True)
-        chart = plot_to_img(fig)
+        #df_new = covid19_day_ratio(df , NOC , KindofMedal)
+        #fig = plt.figure()
+        #fig.subplots_adjust(bottom=0.4)
+        #ax = fig.add_subplot(111)
+        #ax.set_ylim(0 , 3)
+        #df_tmp.plot(ax = ax , kind = KindofGraph, figsize = (32, 14) , fontsize = 22 , grid = True)
+        #chart = plot_to_img(fig)
 
     
-    return render_template(
-        'Query.html',
-        form1 = form1,
-        chart = chart
+    #return render_template(
+     #   'Query.html',
+      #  form1 = form1,
+       # chart = chart
         
-    )
+    #)
 
 @app.route('/Query' , methods = ['GET' , 'POST'])
 def Query():
 
     print("Query")
 
-    form1 = OlympicMedals()
+    form1 = OlympicMedals(request.form)
 
     df = pd.read_csv(path.join(path.dirname(__file__), 'static/Data/Olympic_athlets.csv'))
 
 
     NOC_choices = get_NOC_choices(df)
     form1.NOC.choices = NOC_choices
-
+    chart = 'https://lh3.googleusercontent.com/proxy/dAmg5lEF-clbPeTvGwS6T6BjO9-ZqYACjubBTu01Fbwlt9tLCYOn_MO7nNbVpyK2n1OPxSzShTJdCCRUYwtfc7A8kvtrogQN'
     if request.method == 'POST':
         NOC = form1.NOC.data 
         StartYear = form1.StartYear.data
         EndYear = form1.EndYear.data
         KindofGraph = form1.KindofGraph.data
         
-        df = OlympicDataFramebyYearsandNOC(df , NOC , StartYear , EndYear)
+        df1 = df.replace({'Medal':{'Gold': 1}})
+        df1 = df1.replace({'Medal':{'Bronze': 1}})
+        df1 = df1.replace({'Medal':{'Silver': 1}})
+        df1 = df1.fillna(0)
+        df1 = df1.drop(['ID' , 'Name' , 'Sex' , 'Age' , 'Height' , 'Weight' , 'Team' , 'Games' , 'Season' , 'City' , 'Sport' , 'Event'], 1)
+        df1 = df1.set_index('NOC')
+        df1 = df1.loc[NOC]
+        df1 = df1.groupby(['NOC' , 'Year']).sum()
+        df1 = pd.DataFrame(df1)
+        df1 = df1.reset_index()
+        df1 = df1.set_index('Year')
+        df1 = df1.sort_index()
+        df1 = df1.loc[StartYear:EndYear]
+        df2 = pd.DataFrame()
+        for item in NOC:
+            x = df1.loc[df1['NOC'] == item]
+            y = x['Medal']
+            df2[item] = y
+
+        print(df2)
+        print(StartYear)
+        print(type(StartYear))
+        print(EndYear)
+
         fig = plt.figure()
-        fig.subplots_adjust(bottom=0.4)
         ax = fig.add_subplot(111)
-        ax.set_ylim(0 , 3)
-        df.plot(ax = ax , kind = KindofGraph, figsize = (32, 14) , fontsize = 22 , grid = True)
+        df2.plot(kind = KindofGraph, ax = ax)
         chart = plot_to_img(fig)
     
     return render_template(
         'Query.html',
         title='Query',
-        form1 = form1,
-        chart = chart
+        chart = chart,
+        form1 = form1
         
     )

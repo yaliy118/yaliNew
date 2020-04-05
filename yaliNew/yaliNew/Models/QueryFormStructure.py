@@ -5,7 +5,7 @@
 from datetime import datetime
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, SelectMultipleField
 from wtforms import Form, BooleanField, PasswordField
 from wtforms import TextField, TextAreaField, SelectField, DateField
 from wtforms import validators, ValidationError
@@ -77,16 +77,16 @@ class LoginFormStructure(FlaskForm):
 #    
 #    submit = SubmitField('Submit')
 
-class OlympicMedalsquery(FlaskForm):
-    NOC = SelectMultipleField('Select Multiple:' , validators = [DataRequired] )
-    KindofMedal = SelectMultipleField('Select Multiple:' , validators = [DataRequired] ) 
-    KindofGraph = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('barh', 'barh'), ('bar', 'bar')])
-    submit = SubmitField('submit')
+#class OlympicMedalsquery(FlaskForm):
+ #   NOC = SelectMultipleField('Select Multiple:' , validators = [DataRequired] )
+  #  KindofMedal = SelectMultipleField('Select Multiple:' , validators = [DataRequired] ) 
+   # KindofGraph = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('barh', 'barh'), ('bar', 'bar')])
+    #submit = SubmitField('submit')
 
 class OlympicMedals(FlaskForm):
     NOC = SelectMultipleField('Select Multiple:' , validators = [DataRequired] )
-    StartYear = DateField('Start Year:' , validators = [DataRequired])
-    EndYear = DateField('End Year:' , validators = [DataRequired])
+    StartYear = StringField('Start Year:' , validators = [DataRequired])
+    EndYear = StringField('End Year:' , validators = [DataRequired])
     KindofGraph = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('barh', 'barh'), ('bar', 'bar'), ('line', 'line')])
     submit = SubmitField('submit')
 
