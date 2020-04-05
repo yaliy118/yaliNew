@@ -36,6 +36,10 @@ from yaliNew.Models.QueryFormStructure import LoginFormStructure
 from yaliNew.Models.QueryFormStructure import QueryFormStructure
 db_Functions = create_LocalDatabaseServiceRoutines() 
 
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+from MyFinalProject.Models.plot_service_functions import plot_to_img.
+
 
 @app.route('/')
 def Home():
@@ -136,35 +140,73 @@ def Login():
         )
 
 
-@app.route('/Query', methods=['GET', 'POST'])
-def Query():
-    athlete = None
-    sport = None
-    Name = ''
-    Sport = ''
-    df = pd.read_csv(path.join(path.dirname(__file__), 'static\\Data\\Olympic_athlets.csv'))
-    df = df.set_index('Name')
+@app.route('/query' , methods = ['GET' , 'POST'])
+def query():
 
-    form = QueryFormStructure(request.form)
-     
-    if (request.method == 'POST' ):
-        name = form.name.data
-        if (name in df.index):
-            Sport = df.loc[name,'Sport']
-        else:
-            Sport = name + ', no such athlete'
-        Name = name
-        form.name.data = ''
+    print("Query")
+
+    form1 = OlympicMedals()
+
+    df = pd.read_csv(path.join(path.dirname(__file__), 'static/Data/Olympic_athlets.csv'))
+
+
+    NOC_choices = get_NOC_choices(df)
+    form1.NOC.choices = NOC_choices
+   
+    
+
+    if request.method == 'POST':
+        NOC = form1.NOC.data 
+        KindofMedal = form1.KindofMedal.data
+        KindofGraph = form1.KindofGraph.data
         
+        df_new = covid19_day_ratio(df , NOC , KindofMedal)
+        fig = plt.figure()
+        fig.subplots_adjust(bottom=0.4)
+        ax = fig.add_subplot(111)
+        ax.set_ylim(0 , 3)
+        df_tmp.plot(ax = ax , kind = KindofGraph, figsize = (32, 14) , fontsize = 22 , grid = True)
+        chart = plot_to_img(fig)
 
-    raw_data_table = df.head().to_html(classes = 'table table-hover')
+    
+    return render_template(
+        'Query.html',
+        form1 = form1,
+        chart = chart
+        
+    )
 
-    return render_template('Query.html', 
-            form = form,
-            sport = Sport,
-            athlete = Name,
-            raw_data_table = raw_data_table,
-            title='Query',
-            year=datetime.now().year,
-            message='This page will use the web forms to get user input'
-        )
+@app.route('/Query' , methods = ['GET' , 'POST'])
+def Query():
+
+    print("Query")
+
+    form1 = OlympicMedals()
+
+    df = pd.read_csv(path.join(path.dirname(__file__), 'static/Data/Olympic_athlets.csv'))
+
+
+    NOC_choices = get_NOC_choices(df)
+    form1.NOC.choices = NOC_choices
+
+    if request.method == 'POST':
+        NOC = form1.NOC.data 
+        StartYear = form1.StartYear.data
+        EndYear = form1.EndYear.data
+        KindofGraph = form1.KindofGraph.data
+        
+        df = OlympicDataFramebyYearsandNOC(df , NOC , StartYear , EndYear)
+        fig = plt.figure()
+        fig.subplots_adjust(bottom=0.4)
+        ax = fig.add_subplot(111)
+        ax.set_ylim(0 , 3)
+        df.plot(ax = ax , kind = KindofGraph, figsize = (32, 14) , fontsize = 22 , grid = True)
+        chart = plot_to_img(fig)
+    
+    return render_template(
+        'Query.html',
+        title='Query',
+        form1 = form1,
+        chart = chart
+        
+    )

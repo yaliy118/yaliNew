@@ -33,6 +33,9 @@
     <Compile Include="yaliNew\Models\LocalDatabaseRoutines.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="yaliNew\Models\plot_service_functions.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="yaliNew\Models\QueryFormStructure.py">
       <SubType>Code</SubType>
     </Compile>
@@ -83,6 +86,7 @@
     <Content Include="yaliNew\templates\Index.html" />
     <Content Include="yaliNew\templates\layout.html" />
     <Content Include="yaliNew\templates\Login.html" />
+    <Content Include="yaliNew\templates\plot_demo.html" />
     <Content Include="yaliNew\templates\Query.html" />
     <Content Include="yaliNew\templates\Register.html" />
   </ItemGroup>

@@ -22,8 +22,8 @@ from wtforms.validators import DataRequired
 ##   the 'submit' button - the button the user will press to have the 
 ##                         form be "posted" (sent to the server for process)
 class QueryFormStructure(FlaskForm):
-    name   = StringField('athlete:  ' , validators = [DataRequired()])
-    submit = SubmitField('Submit')
+    country = SelectField('Select a Country:' , validators = [DataRequired] )
+    subnmit = SubmitField('submit')
 
 
 
@@ -76,4 +76,17 @@ class LoginFormStructure(FlaskForm):
 #class DataParametersFormStructure(FlaskForm):
 #    
 #    submit = SubmitField('Submit')
+
+class OlympicMedalsquery(FlaskForm):
+    NOC = SelectMultipleField('Select Multiple:' , validators = [DataRequired] )
+    KindofMedal = SelectMultipleField('Select Multiple:' , validators = [DataRequired] ) 
+    KindofGraph = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('barh', 'barh'), ('bar', 'bar')])
+    submit = SubmitField('submit')
+
+class OlympicMedals(FlaskForm):
+    NOC = SelectMultipleField('Select Multiple:' , validators = [DataRequired] )
+    StartYear = DateField('Start Year:' , validators = [DataRequired])
+    EndYear = DateField('End Year:' , validators = [DataRequired])
+    KindofGraph = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('barh', 'barh'), ('bar', 'bar'), ('line', 'line')])
+    submit = SubmitField('submit')
 

@@ -1,32 +1,30 @@
 ﻿{% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
 
-<h1 style="background-color:orangered; color:black;">{{ title }}</h1>
-<p> </p>
-<form method=post>
-    {{ form.csrf }}
-    <table>
-        <tr>
-            <td class="input text"><h2>{{ form.name.label }} </h2></td>
-            <td><h2>                   {{ form.name }}       </h2></td>
-        </tr>
-        <tr>
-            <td>
-                <button class="btn btn-success" style="background-color:orangered">Sport</button>
-            </td>
-        </tr>
-    </table>
-</form>
+<h1>{{ title }}</h1>
 
-<p><h1>The Sport who <b>{{ athlete }}</b> Competed is : <b>{{sport}}</b></h1></p>
+<div class="row">
 
-<h3> Table is: </h3>
-{{ raw_data_table | safe}}
-
-
+    <div class="col-md-4">
+        <form method="post">
+            {{ form1.csrf_token }}
+            {{ wtf.form_field(form1.NOC) }}
+            {{ wtf.form_field(form1.start_date) }}
+            {{ wtf.form_field(form1.end_date) }}
+            {{ wtf.form_field(form1.KindofGraph) }}
+            <input class="btn btn-primary" type="submit" value="submit">
+        </form>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <h4>The Graph is:</h4>
+            <img src={{ chart }} class="img-thumbnail" alt="not found">
+        </div>
+    </div>
+</div>
 
 
-    {% endblock %}
 
-
+        {% endblock %}
