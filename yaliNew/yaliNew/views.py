@@ -192,7 +192,7 @@ def Query():
 
     NOC_choices = get_NOC_choices(df)
     form1.NOC.choices = NOC_choices
-    chart = 'https://lh3.googleusercontent.com/proxy/dAmg5lEF-clbPeTvGwS6T6BjO9-ZqYACjubBTu01Fbwlt9tLCYOn_MO7nNbVpyK2n1OPxSzShTJdCCRUYwtfc7A8kvtrogQN'
+    chart = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSBcoPs9QUBza21fUT1LKNoXS35g3DrR5tvyU7NMaNwfSw8DUdq&usqp=CAU'
     if request.method == 'POST':
         NOC = form1.NOC.data 
         StartYear = form1.StartYear.data
@@ -205,19 +205,22 @@ def Query():
         df1 = df1.fillna(0)
         df1 = df1.drop(['ID' , 'Name' , 'Sex' , 'Age' , 'Height' , 'Weight' , 'Team' , 'Games' , 'Season' , 'City' , 'Sport' , 'Event'], 1)
         df1 = df1.set_index('NOC')
-        df1 = df1.loc[NOC]
         df1 = df1.groupby(['NOC' , 'Year']).sum()
         df1 = pd.DataFrame(df1)
         df1 = df1.reset_index()
         df1 = df1.set_index('Year')
         df1 = df1.sort_index()
-        df1 = df1.loc[StartYear:EndYear]
         df2 = pd.DataFrame()
+        x = df1.loc[df1['NOC'] == 'GRE']
+        y = x['Medal']
+        df2['GRE'] = y
+        df2 = df2.rename(columns={'GRE': 'a'})
         for item in NOC:
             x = df1.loc[df1['NOC'] == item]
             y = x['Medal']
             df2[item] = y
-
+        df2 = df2.loc[StartYear:EndYear]
+        df2 = df2.drop('a',1)
         print(df2)
         print(StartYear)
         print(type(StartYear))
