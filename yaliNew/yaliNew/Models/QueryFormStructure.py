@@ -87,6 +87,6 @@ class OlympicMedals(FlaskForm):
     NOC = SelectMultipleField('Select Multiple:' , validators = [DataRequired] )
     StartYear = StringField('Start Year:' , validators = [DataRequired])
     EndYear = StringField('End Year:' , validators = [DataRequired])
-    KindofGraph = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('barh', 'barh'), ('bar', 'bar'), ('line', 'line'), ('area', 'area')])
+    KindofGraph = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('barh', 'barh'), ('bar', 'bar'), ('line', 'line')])
     submit = SubmitField('submit')
 

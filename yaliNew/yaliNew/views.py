@@ -221,6 +221,7 @@ def Query():
             df2[item] = y
         df2 = df2.loc[StartYear:EndYear]
         df2 = df2.drop('a',1)
+        df2 = df2.fillna(0)
         print(df2)
         print(StartYear)
         print(type(StartYear))
