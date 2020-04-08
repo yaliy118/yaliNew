@@ -37,51 +37,6 @@ def plot_to_img(fig):
     return pngImageB64String
 
 
-#def OlympicDataFrame(df , NOC , KindofMedal):
- #   df = df.drop(['Name' , 'Sex' , 'Age' , 'Height' , 'Weight' , 'Team' , 'Games' , 'Year' , 'Season' , 'City' , 'Sport' , 'Event'], 1)
-  #  if KindofMedal == 'Gold':
-   #     df1 = df.replace({'Medal':{'Gold': 1}})
-    #    df1 = df1.replace({'Medal':{'Bronze': 0}})
-     #   df1 = df1.replace({'Medal':{'Silver': 0}})
-      #  df1 = df.replace({'NOC':{NOC: NOC + '_Gold'}})
-       # df1 = df1.fillna(0)
-        #df1 = df1.groupby('NOC').sum()
-        #df1 = df1.loc[ NOC ]
- #       df1 = df1.transpose()
-  #  else:
-   #     df1 = {}
-   #
-    #
-    #if KindofMedal == 'Silver':
-#        df2 = df.replace({'Medal':{'Gold': 0}})
- #       df2 = df2.replace({'Medal':{'Bronze': 0}})
-  #      df2 = df2.replace({'Medal':{'Silver': 1}})
-   #     df2 = df2.fillna(0)
-    #    df2 = df.replace({'NOC':{NOC: NOC + '_Silver'}})
-     #   df2 = df2.groupby('NOC').sum()
-      #  df2 = df2.loc[ NOC ]
-       # df2 = df2.transpose()
-    #else:
-     #   df2 = {}
-
- #   if KindofMedal == 'Bronze':
-  #      df3 = df.replace({'Medal':{'Gold': 0}})
-   #     df3 = df3.replace({'Medal':{'Bronze': 1}})
-    #    df3 = df3.replace({'Medal':{'Silver': 0}})
-     #   df3 = df3.fillna(0)
-      #  df3 = df.replace({'NOC':{NOC: NOC + '_Bronze'}})
-       # df3 = df3.groupby('NOC').sum()
-        #df3 = df3.loc[ NOC ]
-        #df3 = df3.transpose()
-   # else:
-    #    df3 = {}
-    #
-    #df4 = df1+df2+df3
-    #df4.sort()
-    #df_new = list(df4)
-
-
-    #return df_new
 
 
 

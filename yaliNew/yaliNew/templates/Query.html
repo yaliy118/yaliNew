@@ -2,7 +2,7 @@
 {%import "bootstrap/wtf.html" as wtf%}
 {% block content %}
 
-<h1 style="background-color:lightblue; color:black;">{{ title }}</h1>
+<h1 style="background-color:steelblue; color:white;">{{ title }}</h1>
 
 <div class="row">
 
@@ -13,7 +13,7 @@
             {{ wtf.form_field(form1.StartYear) }}
             {{ wtf.form_field(form1.EndYear) }}
             {{ wtf.form_field(form1.KindofGraph) }}
-            <input class="btn btn-primary" type="submit" value="submit">
+            <input class="btn btn-primary" type="submit" value="Graph">
         </form>
     </div>
     <div class="col-md-8">
