@@ -131,7 +131,7 @@ def Login():
     if (request.method == 'POST' and form.validate()):
         if (db_Functions.IsLoginGood(form.username.data, form.password.data)):
             flash('Login approved!')
-            return redirect('DataModel')
+            return redirect('Query')
         else:
             flash('Error in - Username and/or password')
    
@@ -144,41 +144,7 @@ def Login():
         )
 
 
-#@app.route('/query' , methods = ['GET' , 'POST'])
-#def query():
 
- #   print("Query")
-
-  #  form1 = OlympicMedals()
-
-   # df = pd.read_csv(path.join(path.dirname(__file__), 'static/Data/Olympic_athlets.csv'))
-
-
-    #NOC_choices = get_NOC_choices(df)
-    #form1.NOC.choices = NOC_choices
-   
-    
-
-    #if request.method == 'POST':
-     #   NOC = form1.NOC.data 
-      #  KindofMedal = form1.KindofMedal.data
-       # KindofGraph = form1.KindofGraph.data
-        
-        #df_new = covid19_day_ratio(df , NOC , KindofMedal)
-        #fig = plt.figure()
-        #fig.subplots_adjust(bottom=0.4)
-        #ax = fig.add_subplot(111)
-        #ax.set_ylim(0 , 3)
-        #df_tmp.plot(ax = ax , kind = KindofGraph, figsize = (32, 14) , fontsize = 22 , grid = True)
-        #chart = plot_to_img(fig)
-
-    
-    #return render_template(
-     #   'Query.html',
-      #  form1 = form1,
-       # chart = chart
-        
-    #)
 
 @app.route('/Query' , methods = ['GET' , 'POST'])
 def Query():
@@ -192,9 +158,13 @@ def Query():
 
     NOC_choices = get_NOC_choices(df)
     form1.NOC.choices = NOC_choices
-    chart = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSBcoPs9QUBza21fUT1LKNoXS35g3DrR5tvyU7NMaNwfSw8DUdq&usqp=CAU'
+    chart_all = 'https://sportshub.cbsistatic.com/i/r/2019/07/24/256d9092-eadf-400f-9efe-290d3cba57b2/thumbnail/1200x675/275b3cf435c363443fa7f085e34619c1/screen-shot-2019-07-24-at-1-07-13-pm.png'
+    chart_Gold = 'https://upload.wikimedia.org/wikipedia/commons/3/3e/IOCrings.jpg'
+    chart_Silver = 'https://i.ebayimg.com/thumbs/images/g/AmgAAOSwAt1eHz9Q/s-l200.jpg'
+    chart_Bronze = 'https://lh3.googleusercontent.com/proxy/EFI_QTpYTGnvb8Q_PxBjfhr50Y5bkqjpzn05Kt0pEYiMkdyTt4YOUrQMdh56iMcerPPYND-oqXnArSqJ-1jzwlU1lnZuQ_fqbV86IYeWwiOcuqEvM04AtUh9TSvvPQ'
+    
     if request.method == 'POST':
-        NOC = form1.NOC.data 
+        NOC = form1.NOC.data
         StartYear = form1.StartYear.data
         EndYear = form1.EndYear.data
         KindofGraph = form1.KindofGraph.data
@@ -210,32 +180,118 @@ def Query():
         df1 = df1.reset_index()
         df1 = df1.set_index('Year')
         df1 = df1.sort_index()
-        df2 = pd.DataFrame()
+        dfall = pd.DataFrame()
         x = df1.loc[df1['NOC'] == 'GRE']
         y = x['Medal']
-        df2['GRE'] = y
-        df2 = df2.rename(columns={'GRE': 'a'})
+        dfall['GRE'] = y
+        dfall = dfall.rename(columns={'GRE': 'a'})
         for item in NOC:
             x = df1.loc[df1['NOC'] == item]
             y = x['Medal']
-            df2[item] = y
-        df2 = df2.loc[StartYear:EndYear]
-        df2 = df2.drop('a',1)
-        df2 = df2.fillna(0)
-        print(df2)
-        print(StartYear)
-        print(type(StartYear))
-        print(EndYear)
+            dfall[item] = y
+        dfall = dfall.loc[StartYear:EndYear]
+        dfall = dfall.drop('a',1)
+        dfall = dfall.fillna(0)
 
         fig = plt.figure()
         ax = fig.add_subplot(111)
-        df2.plot(kind = KindofGraph, ax = ax)
-        chart = plot_to_img(fig)
-    
+        dfall.plot(kind = KindofGraph, ax = ax)
+        chart_all = plot_to_img(fig)
+
+        df1 = df.replace({'Medal':{'Gold': 1}})
+        df1 = df1.replace({'Medal':{'Bronze': 0}})
+        df1 = df1.replace({'Medal':{'Silver': 0}})
+        df1 = df1.fillna(0)
+        df1 = df1.drop(['ID' , 'Name' , 'Sex' , 'Age' , 'Height' , 'Weight' , 'Team' , 'Games' , 'Season' , 'City' , 'Sport' , 'Event'], 1)
+        df1 = df1.set_index('NOC')
+        df1 = df1.groupby(['NOC' , 'Year']).sum()
+        df1 = pd.DataFrame(df1)
+        df1 = df1.reset_index()
+        df1 = df1.set_index('Year')
+        df1 = df1.sort_index()
+        dfGold = pd.DataFrame()
+        x = df1.loc[df1['NOC'] == 'GRE']
+        y = x['Medal']
+        dfGold['GRE'] = y
+        dfGold = dfGold.rename(columns={'GRE': 'a'})
+        for item in NOC:
+            x = df1.loc[df1['NOC'] == item]
+            y = x['Medal']
+            dfGold[item] = y
+        dfGold = dfGold.loc[StartYear:EndYear]
+        dfGold = dfGold.drop('a',1)
+        dfGold = dfGold.fillna(0)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        dfGold.plot(kind = KindofGraph, ax = ax)
+        chart_Gold = plot_to_img(fig)
+
+        df1 = df.replace({'Medal':{'Gold': 0}})
+        df1 = df1.replace({'Medal':{'Bronze': 0}})
+        df1 = df1.replace({'Medal':{'Silver': 1}})
+        df1 = df1.fillna(0)
+        df1 = df1.drop(['ID' , 'Name' , 'Sex' , 'Age' , 'Height' , 'Weight' , 'Team' , 'Games' , 'Season' , 'City' , 'Sport' , 'Event'], 1)
+        df1 = df1.set_index('NOC')
+        df1 = df1.groupby(['NOC' , 'Year']).sum()
+        df1 = pd.DataFrame(df1)
+        df1 = df1.reset_index()
+        df1 = df1.set_index('Year')
+        df1 = df1.sort_index()
+        dfSilver = pd.DataFrame()
+        x = df1.loc[df1['NOC'] == 'GRE']
+        y = x['Medal']
+        dfSilver['GRE'] = y
+        dfSilver = dfSilver.rename(columns={'GRE': 'a'})
+        for item in NOC:
+            x = df1.loc[df1['NOC'] == item]
+            y = x['Medal']
+            dfSilver[item] = y
+        dfSilver = dfSilver.loc[StartYear:EndYear]
+        dfSilver = dfSilver.drop('a',1)
+        dfSilver = dfSilver.fillna(0)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        dfSilver.plot(kind = KindofGraph, ax = ax)
+        chart_Silver = plot_to_img(fig)
+
+        df1 = df.replace({'Medal':{'Gold': 0}})
+        df1 = df1.replace({'Medal':{'Bronze': 1}})
+        df1 = df1.replace({'Medal':{'Silver': 0}})
+        df1 = df1.fillna(0)
+        df1 = df1.drop(['ID' , 'Name' , 'Sex' , 'Age' , 'Height' , 'Weight' , 'Team' , 'Games' , 'Season' , 'City' , 'Sport' , 'Event'], 1)
+        df1 = df1.set_index('NOC')
+        df1 = df1.groupby(['NOC' , 'Year']).sum()
+        df1 = pd.DataFrame(df1)
+        df1 = df1.reset_index()
+        df1 = df1.set_index('Year')
+        df1 = df1.sort_index()
+        dfBronze = pd.DataFrame()
+        x = df1.loc[df1['NOC'] == 'GRE']
+        y = x['Medal']
+        dfBronze['GRE'] = y
+        dfBronze = dfBronze.rename(columns={'GRE': 'a'})
+        for item in NOC:
+            x = df1.loc[df1['NOC'] == item]
+            y = x['Medal']
+            dfBronze[item] = y
+        dfBronze = dfBronze.loc[StartYear:EndYear]
+        dfBronze = dfBronze.drop('a',1)
+        dfBronze = dfBronze.fillna(0)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        dfBronze.plot(kind = KindofGraph, ax = ax)
+        chart_Bronze = plot_to_img(fig)
+                
     return render_template(
         'Query.html',
-        title='Query',
-        chart = chart,
+        title='Data Query',
+        chart_all = chart_all,
+        chart_Gold = chart_Gold,
+        chart_Silver = chart_Silver,
+        chart_Bronze = chart_Bronze,
         form1 = form1
         
     )

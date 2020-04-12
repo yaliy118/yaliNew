@@ -77,11 +77,7 @@ class LoginFormStructure(FlaskForm):
 #    
 #    submit = SubmitField('Submit')
 
-#class OlympicMedalsquery(FlaskForm):
- #   NOC = SelectMultipleField('Select Multiple:' , validators = [DataRequired] )
-  #  KindofMedal = SelectMultipleField('Select Multiple:' , validators = [DataRequired] ) 
-   # KindofGraph = SelectField('Chart Kind' , validators = [DataRequired] , choices=[('barh', 'barh'), ('bar', 'bar')])
-    #submit = SubmitField('submit')
+
 
 class OlympicMedals(FlaskForm):
     NOC = SelectMultipleField('Select Multiple:' , validators = [DataRequired] )

@@ -4,6 +4,7 @@
 
 <h1 style="background-color:steelblue; color:white;">{{ title }}</h1>
 
+
 <div class="row">
 
     <div class="col-md-4">
@@ -18,9 +19,23 @@
     </div>
     <div class="col-md-8">
         <div class="row">
-            <h4>The Graph is:</h4>
-            <img src={{ chart }} class="img-thumbnail" alt="not found">
+            <h4>The Graph of all medals is:</h4>
+            <img src={{ chart_all }} class="img-thumbnail" alt="not found">
+        </div>
+        <div class="row">
+            <h4>The Graph of gold medals is:</h4>
+            <img src={{ chart_Gold }} class="img-thumbnail" alt="not found">
+        </div>
+        <div class="row">
+            <h4>The Graph of silver medals is:</h4>
+            <img src={{ chart_Silver }} class="img-thumbnail" alt="not found">
+        </div>
+        <div class="row">
+            <h4>The Graph of bronze medals is:</h4>
+            <img src={{ chart_Bronze }} class="img-thumbnail" alt="not found">
         </div>
     </div>
 </div>
+<h1></h1>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSBcoPs9QUBza21fUT1LKNoXS35g3DrR5tvyU7NMaNwfSw8DUdq&usqp=CAU" width="1150" height="200" />
         {% endblock %}
