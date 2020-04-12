@@ -149,7 +149,6 @@ def Login():
 @app.route('/Query' , methods = ['GET' , 'POST'])
 def Query():
 
-    print("Query")
 
     form1 = OlympicMedals(request.form)
 
@@ -159,9 +158,9 @@ def Query():
     NOC_choices = get_NOC_choices(df)
     form1.NOC.choices = NOC_choices
     chart_all = 'https://sportshub.cbsistatic.com/i/r/2019/07/24/256d9092-eadf-400f-9efe-290d3cba57b2/thumbnail/1200x675/275b3cf435c363443fa7f085e34619c1/screen-shot-2019-07-24-at-1-07-13-pm.png'
-    chart_Gold = 'https://upload.wikimedia.org/wikipedia/commons/3/3e/IOCrings.jpg'
-    chart_Silver = 'https://i.ebayimg.com/thumbs/images/g/AmgAAOSwAt1eHz9Q/s-l200.jpg'
-    chart_Bronze = 'https://lh3.googleusercontent.com/proxy/EFI_QTpYTGnvb8Q_PxBjfhr50Y5bkqjpzn05Kt0pEYiMkdyTt4YOUrQMdh56iMcerPPYND-oqXnArSqJ-1jzwlU1lnZuQ_fqbV86IYeWwiOcuqEvM04AtUh9TSvvPQ'
+    chart_Gold = 'https://i.pinimg.com/originals/42/2a/26/422a2600350a3a1256445a6fe4e57507.jpg'
+    chart_Silver = 'https://c1.staticflickr.com/9/8296/8016919631_15b98c52dc_b.jpg'
+    chart_Bronze = 'https://ewscripps.brightspotcdn.com/dims4/default/a1c860a/2147483647/strip/true/crop/640x360+0+60/resize/1280x720!/quality/90/?url=https%3A%2F%2Fmediaassets.ktnv.com%2Fphoto%2F2016%2F08%2F08%2FBronze_1470670140342_43914198_ver1.0_640_480.png'
     
     if request.method == 'POST':
         NOC = form1.NOC.data
