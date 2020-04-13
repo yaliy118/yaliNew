@@ -100,7 +100,7 @@ def Register():
 
 @app.route('/DataModel')
 def DataModel():
-    """Renders the contact page."""
+    """Renders the DataModel page."""
     return render_template(
         'DataModel.html',
         title='Data Model',
@@ -136,7 +136,7 @@ def Login():
             flash('Error in - Username and/or password')
    
     return render_template(
-        'login.html', 
+        'Login.html', 
         form=form, 
         title='Log in',
         year=datetime.now().year,
@@ -148,7 +148,6 @@ def Login():
 
 @app.route('/Query' , methods = ['GET' , 'POST'])
 def Query():
-
 
     form1 = OlympicMedals(request.form)
 
