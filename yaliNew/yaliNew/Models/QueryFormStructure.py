@@ -65,6 +65,8 @@ class LoginFormStructure(FlaskForm):
     username = StringField('User name:  ' , validators = [DataRequired()])
     password = StringField('Password:  ' , validators = [DataRequired()])
     submit = SubmitField('Submit')
+
+
 ## This class have the fields that the user can set, to have the query parameters for analysing the data
 ##   This form is where the user can set different parameters, depand on your project,
 ##   that will be used to do the data analysis (using Pandas etc.)

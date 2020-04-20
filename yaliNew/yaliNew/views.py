@@ -77,17 +77,15 @@ def About():
 @app.route('/Register', methods=['GET', 'POST'])
 def Register():
     form = UserRegistrationFormStructure(request.form)
-    #ha
+
     if (request.method == 'POST' and form.validate()):
         if (not db_Functions.IsUserExist(form.username.data)):
             db_Functions.AddNewUser(form)
             db_table = ""
 
             flash('Thanks for registering new user - '+ form.FirstName.data + " " + form.LastName.data )
-            return redirect('DataModel')
         else:
             flash('Error: User with this Username already exist ! - '+ form.username.data)
-            form = UserRegistrationFormStructure(request.form)
 
     return render_template(
         'Register.html', 
