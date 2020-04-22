@@ -45,6 +45,7 @@ from yaliNew.Models.plot_service_functions import get_NOC_choices
 from flask_bootstrap import Bootstrap
 bootstrap = Bootstrap(app)
 
+# Landing page - Home page
 @app.route('/')
 def Home():
     """Renders the home page."""
@@ -54,6 +55,7 @@ def Home():
         year=datetime.now().year,
     )
 
+# Contact page
 @app.route('/Contact')
 def Contact():
     """Renders the contact page."""
@@ -64,6 +66,7 @@ def Contact():
         message='Your contact page.'
     )
 
+# About Page
 @app.route('/About')
 def About():
     """Renders the about page."""
@@ -74,6 +77,12 @@ def About():
         message='Your application description page.'
     )
 
+
+# -------------------------------------------------------
+# Register new user page
+# This function will get user details, will check if the user already exists
+# and if not, it will save the details in the users data base
+# -------------------------------------------------------
 @app.route('/Register', methods=['GET', 'POST'])
 def Register():
     form = UserRegistrationFormStructure(request.form)
@@ -95,7 +104,7 @@ def Register():
         repository_name='Pandas',
         )
 
-
+# Data model description, used by the site and leads to DataSet page
 @app.route('/DataModel')
 def DataModel():
     """Renders the DataModel page."""
@@ -106,7 +115,7 @@ def DataModel():
         message='In this page we will display the datasets we are going to use in order to answer ARE THERE UFOs'
     )
 
-
+# Data Set page, will show the data table
 @app.route('/DataSet1')
 def DataSet1():
     """Renders the DataSet1 page."""
@@ -122,6 +131,12 @@ def DataSet1():
     )
 
 
+# -------------------------------------------------------
+# Login page
+# This page is the filter before the data analysis
+# This function will get user details (username, password), will check if the user exists in the user data base,
+#  if yes - the user will go to data query page, if not - the site will show an error massege.
+# -------------------------------------------------------
 @app.route('/Login', methods=['GET', 'POST'])
 def Login():
     form = LoginFormStructure(request.form)
@@ -143,7 +158,7 @@ def Login():
 
 
 
-
+# Data Query page, will show four graphs of data analysis according to user requests
 @app.route('/Query' , methods = ['GET' , 'POST'])
 def Query():
 
