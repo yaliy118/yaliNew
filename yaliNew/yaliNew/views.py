@@ -156,20 +156,23 @@ def Login():
 # Data Query page, will show four graphs of data analysis according to user requests
 @app.route('/Query' , methods = ['GET' , 'POST'])
 def Query():
-
+    #-----------------------------------------------
+    # Creates the option to use the user's choices
     form1 = OlympicMedals(request.form)
-
     df = pd.read_csv(path.join(path.dirname(__file__), 'static/Data/Olympic_athlets.csv'))
-
-
     NOC_choices = get_NOC_choices(df)
     form1.NOC.choices = NOC_choices
+    #-----------------------------------------------
+    # View images before creating the graphs
     chart_all = 'https://sportshub.cbsistatic.com/i/r/2019/07/24/256d9092-eadf-400f-9efe-290d3cba57b2/thumbnail/1200x675/275b3cf435c363443fa7f085e34619c1/screen-shot-2019-07-24-at-1-07-13-pm.png'
     chart_Gold = 'https://i.pinimg.com/originals/42/2a/26/422a2600350a3a1256445a6fe4e57507.jpg'
     chart_Silver = 'https://c1.staticflickr.com/9/8296/8016919631_15b98c52dc_b.jpg'
     chart_Bronze = 'https://ewscripps.brightspotcdn.com/dims4/default/a1c860a/2147483647/strip/true/crop/640x360+0+60/resize/1280x720!/quality/90/?url=https%3A%2F%2Fmediaassets.ktnv.com%2Fphoto%2F2016%2F08%2F08%2FBronze_1470670140342_43914198_ver1.0_640_480.png'
-    
+    #-----------------------------------------------
+    # When the user clicks the "Graphs" button, you will continue to do the code that follows
     if request.method == 'POST':
+        #-------------------------------------------
+        # Inserting user choices into variables
         NOC = form1.NOC.data
         StartYear = form1.StartYear.data
         EndYear = form1.EndYear.data
@@ -226,100 +229,189 @@ def Query():
         # Change all NaN to 0 in database
         dfall = dfall.fillna(0)
         #------------------------------------------
-        #Insert a picture of the graph
+        # Insert a picture of the graph
         fig = plt.figure()
         ax = fig.add_subplot(111)
         dfall.plot(kind = KindofGraph, ax = ax)
         chart_all = plot_to_img(fig)
         #------------------------------------------
 
-
+        #------------------------------------------
+        # Making the winning gold type a number
         df1 = df.replace({'Medal':{'Gold': 1}})
         df1 = df1.replace({'Medal':{'Bronze': 0}})
         df1 = df1.replace({'Medal':{'Silver': 0}})
         df1 = df1.fillna(0)
+        #------------------------------------------
+        # Delete unwanted columns for research
         df1 = df1.drop(['ID' , 'Name' , 'Sex' , 'Age' , 'Height' , 'Weight' , 'Team' , 'Games' , 'Season' , 'City' , 'Sport' , 'Event'], 1)
+        #------------------------------------------
+        # Make NOC indexed
         df1 = df1.set_index('NOC')
+        #------------------------------------------
+        # Pluse the amount of medals by state and year
         df1 = df1.groupby(['NOC' , 'Year']).sum()
+        #------------------------------------------
+        # Turn the table created into a database so that I can make changes to it in Visual Studio
         df1 = pd.DataFrame(df1)
+        #------------------------------------------
+        # Returns the index
         df1 = df1.reset_index()
+        #------------------------------------------
+        # Make Year indexed
         df1 = df1.set_index('Year')
+        #------------------------------------------
+        # Arrange the years in ascending order
         df1 = df1.sort_index()
+        #------------------------------------------
+        # Create a new database
         dfGold = pd.DataFrame()
+        #------------------------------------------
+        # Enter into a database database a country that participated in all the Olympics that followed so that when you put in the database the desired countries and years there will be no shortage of years
         x = df1.loc[df1['NOC'] == 'GRE']
         y = x['Medal']
         dfGold['GRE'] = y
         dfGold = dfGold.rename(columns={'GRE': 'a'})
+        #------------------------------------------
+        #Enter the desired countries database
         for item in NOC:
             x = df1.loc[df1['NOC'] == item]
             y = x['Medal']
             dfGold[item] = y
+        #------------------------------------------
+        # Cut from the database the desired years
         dfGold = dfGold.loc[StartYear:EndYear]
+        #------------------------------------------
+        # Flip the auxiliary state which can help choose all the years
         dfGold = dfGold.drop('a',1)
+        #------------------------------------------
+        # Change all NaN to 0 in database
         dfGold = dfGold.fillna(0)
-
+        #------------------------------------------
+        # Insert a picture of the graph
         fig = plt.figure()
         ax = fig.add_subplot(111)
         dfGold.plot(kind = KindofGraph, ax = ax)
         chart_Gold = plot_to_img(fig)
+        #------------------------------------------
 
+        #------------------------------------------
+        # Making the winning silver type a number
         df1 = df.replace({'Medal':{'Gold': 0}})
         df1 = df1.replace({'Medal':{'Bronze': 0}})
         df1 = df1.replace({'Medal':{'Silver': 1}})
         df1 = df1.fillna(0)
+        #------------------------------------------
+        # Delete unwanted columns for research
         df1 = df1.drop(['ID' , 'Name' , 'Sex' , 'Age' , 'Height' , 'Weight' , 'Team' , 'Games' , 'Season' , 'City' , 'Sport' , 'Event'], 1)
+        #------------------------------------------
+        # Make NOC indexed
         df1 = df1.set_index('NOC')
+        #------------------------------------------
+        # Pluse the amount of medals by state and year
         df1 = df1.groupby(['NOC' , 'Year']).sum()
+        #------------------------------------------
+        # Turn the table created into a database so that I can make changes to it in Visual Studio
         df1 = pd.DataFrame(df1)
+        #------------------------------------------
+        # Returns the index
         df1 = df1.reset_index()
+        #------------------------------------------
+        # Make Year indexed
         df1 = df1.set_index('Year')
+        #------------------------------------------
+        # Arrange the years in ascending order
         df1 = df1.sort_index()
+        #------------------------------------------
+        # Create a new database
         dfSilver = pd.DataFrame()
+        #------------------------------------------
+        # Enter into a database database a country that participated in all the Olympics that followed so that when you put in the database the desired countries and years there will be no shortage of years
         x = df1.loc[df1['NOC'] == 'GRE']
         y = x['Medal']
         dfSilver['GRE'] = y
         dfSilver = dfSilver.rename(columns={'GRE': 'a'})
+        #------------------------------------------
+        #Enter the desired countries database
         for item in NOC:
             x = df1.loc[df1['NOC'] == item]
             y = x['Medal']
             dfSilver[item] = y
+        #------------------------------------------
+        # Cut from the database the desired years
         dfSilver = dfSilver.loc[StartYear:EndYear]
+        #------------------------------------------
+        # Flip the auxiliary state which can help choose all the years
         dfSilver = dfSilver.drop('a',1)
+        #------------------------------------------
+        # Change all NaN to 0 in database
         dfSilver = dfSilver.fillna(0)
-
+        #------------------------------------------
+        # Insert a picture of the graph
         fig = plt.figure()
         ax = fig.add_subplot(111)
         dfSilver.plot(kind = KindofGraph, ax = ax)
         chart_Silver = plot_to_img(fig)
+        #------------------------------------------
 
+        #------------------------------------------
+        # Making the winning bronze type a number
         df1 = df.replace({'Medal':{'Gold': 0}})
         df1 = df1.replace({'Medal':{'Bronze': 1}})
         df1 = df1.replace({'Medal':{'Silver': 0}})
         df1 = df1.fillna(0)
+        #------------------------------------------
+        # Delete unwanted columns for research
         df1 = df1.drop(['ID' , 'Name' , 'Sex' , 'Age' , 'Height' , 'Weight' , 'Team' , 'Games' , 'Season' , 'City' , 'Sport' , 'Event'], 1)
+        #------------------------------------------
+        # Make NOC indexed
         df1 = df1.set_index('NOC')
+        #------------------------------------------
+        # Pluse the amount of medals by state and year
         df1 = df1.groupby(['NOC' , 'Year']).sum()
+        #------------------------------------------
+        # Turn the table created into a database so that I can make changes to it in Visual Studio
         df1 = pd.DataFrame(df1)
+        #------------------------------------------
+        # Returns the index
         df1 = df1.reset_index()
+        #------------------------------------------
+        # Make Year indexed
         df1 = df1.set_index('Year')
+        #------------------------------------------
+        # Arrange the years in ascending order
         df1 = df1.sort_index()
+        #------------------------------------------
+        # Create a new database
         dfBronze = pd.DataFrame()
+        #------------------------------------------
+        # Enter into a database database a country that participated in all the Olympics that followed so that when you put in the database the desired countries and years there will be no shortage of years
         x = df1.loc[df1['NOC'] == 'GRE']
         y = x['Medal']
         dfBronze['GRE'] = y
         dfBronze = dfBronze.rename(columns={'GRE': 'a'})
+        #------------------------------------------
+        #Enter the desired countries database
         for item in NOC:
             x = df1.loc[df1['NOC'] == item]
             y = x['Medal']
             dfBronze[item] = y
+        #------------------------------------------
+        # Cut from the database the desired years
         dfBronze = dfBronze.loc[StartYear:EndYear]
+        #------------------------------------------
+        # Flip the auxiliary state which can help choose all the years
         dfBronze = dfBronze.drop('a',1)
+        #------------------------------------------
+        # Change all NaN to 0 in database
         dfBronze = dfBronze.fillna(0)
-
+        #------------------------------------------
+        # Insert a picture of the graph
         fig = plt.figure()
         ax = fig.add_subplot(111)
         dfBronze.plot(kind = KindofGraph, ax = ax)
         chart_Bronze = plot_to_img(fig)
+        #------------------------------------------
                 
     return render_template(
         'Query.html',
