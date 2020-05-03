@@ -48,17 +48,15 @@ bootstrap = Bootstrap(app)
 # Landing page - Home page
 @app.route('/')
 def Home():
-    """Renders the home page."""
     return render_template(
         'Home.html',
         title='Home Page',
         year=datetime.now().year,
     )
 
-# Contact page
+# Contact page - website creator details
 @app.route('/Contact')
 def Contact():
-    """Renders the contact page."""
     return render_template(
         'Contact.html',
         title='Contact',
@@ -66,10 +64,9 @@ def Contact():
         message='Your contact page.'
     )
 
-# About Page
+# About Page - explanation about the site
 @app.route('/About')
 def About():
-    """Renders the about page."""
     return render_template(
         'About.html',
         title='About',
@@ -107,7 +104,6 @@ def Register():
 # Data model description, used by the site and leads to DataSet page
 @app.route('/DataModel')
 def DataModel():
-    """Renders the DataModel page."""
     return render_template(
         'DataModel.html',
         title='Data Model',
@@ -118,7 +114,6 @@ def DataModel():
 # Data Set page, will show the data table
 @app.route('/DataSet1')
 def DataSet1():
-    """Renders the DataSet1 page."""
     df = pd.read_csv(path.join(path.dirname(__file__), 'static/Data/Olympic_athlets.csv'))
     raw_data_table = df.to_html(classes='table table-hover', max_rows=8)
 
@@ -135,7 +130,7 @@ def DataSet1():
 # Login page
 # This page is the filter before the data analysis
 # This function will get user details (username, password), will check if the user exists in the user data base,
-#  if yes - the user will go to data query page, if not - the site will show an error massege.
+# if yes - the user will go to data query page, if not - the site will show an error massege.
 # -------------------------------------------------------
 @app.route('/Login', methods=['GET', 'POST'])
 def Login():
