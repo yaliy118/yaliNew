@@ -174,35 +174,65 @@ def Query():
         StartYear = form1.StartYear.data
         EndYear = form1.EndYear.data
         KindofGraph = form1.KindofGraph.data
-        
+        #-------------------------------------------
+        # Making the winning type a number
         df1 = df.replace({'Medal':{'Gold': 1}})
         df1 = df1.replace({'Medal':{'Bronze': 1}})
         df1 = df1.replace({'Medal':{'Silver': 1}})
         df1 = df1.fillna(0)
+        #-------------------------------------------
+        # Delete unwanted columns for research
         df1 = df1.drop(['ID' , 'Name' , 'Sex' , 'Age' , 'Height' , 'Weight' , 'Team' , 'Games' , 'Season' , 'City' , 'Sport' , 'Event'], 1)
+        #------------------------------------------
+        # Make NOC indexed
         df1 = df1.set_index('NOC')
+        #------------------------------------------
+        # Pluse the amount of medals by state and year
         df1 = df1.groupby(['NOC' , 'Year']).sum()
+        #------------------------------------------
+        # Turn the table created into a database so that I can make changes to it in Visual Studio
         df1 = pd.DataFrame(df1)
+        #------------------------------------------
+        # Returns the index
         df1 = df1.reset_index()
+        #------------------------------------------
+        # Make Year indexed
         df1 = df1.set_index('Year')
+        #------------------------------------------
+        # Arrange the years in ascending order
         df1 = df1.sort_index()
+        #------------------------------------------
+        # Create a new database
         dfall = pd.DataFrame()
+        #------------------------------------------
+        # Enter into a database database a country that participated in all the Olympics that followed so that when you put in the database the desired countries and years there will be no shortage of years
         x = df1.loc[df1['NOC'] == 'GRE']
         y = x['Medal']
         dfall['GRE'] = y
         dfall = dfall.rename(columns={'GRE': 'a'})
+        #------------------------------------------
+        #Enter the desired countries database
         for item in NOC:
             x = df1.loc[df1['NOC'] == item]
             y = x['Medal']
             dfall[item] = y
+        #------------------------------------------
+        # Cut from the database the desired years
         dfall = dfall.loc[StartYear:EndYear]
+        #------------------------------------------
+        # Flip the auxiliary state which can help choose all the years
         dfall = dfall.drop('a',1)
+        #------------------------------------------
+        # Change all NaN to 0 in database
         dfall = dfall.fillna(0)
-
+        #------------------------------------------
+        #Insert a picture of the graph
         fig = plt.figure()
         ax = fig.add_subplot(111)
         dfall.plot(kind = KindofGraph, ax = ax)
         chart_all = plot_to_img(fig)
+        #------------------------------------------
+
 
         df1 = df.replace({'Medal':{'Gold': 1}})
         df1 = df1.replace({'Medal':{'Bronze': 0}})
