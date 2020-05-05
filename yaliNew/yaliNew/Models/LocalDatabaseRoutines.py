@@ -1,6 +1,10 @@
 """
 Used structures and classes
 """
+
+### ----------------------------------------------------------- ###
+### --- include all software packages and libraries needed ---- ###
+### ----------------------------------------------------------- ###
 from os import path
 import json
 import pandas as pd
