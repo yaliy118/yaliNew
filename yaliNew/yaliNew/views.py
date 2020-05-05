@@ -33,7 +33,6 @@ from wtforms import ValidationError
 
 from yaliNew.Models.QueryFormStructure import UserRegistrationFormStructure 
 from yaliNew.Models.QueryFormStructure import LoginFormStructure 
-from yaliNew.Models.QueryFormStructure import QueryFormStructure
 from yaliNew.Models.QueryFormStructure import OlympicMedals
 db_Functions = create_LocalDatabaseServiceRoutines() 
 
