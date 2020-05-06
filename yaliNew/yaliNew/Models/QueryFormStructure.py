@@ -2,15 +2,13 @@
 ### ----------------------------------------------------------- ###
 ### --- include all software packages and libraries needed ---- ###
 ### ----------------------------------------------------------- ###
-from datetime import datetime
-
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectMultipleField
-from wtforms import Form, BooleanField, PasswordField
-from wtforms import TextField, TextAreaField, SelectField, DateField
-from wtforms import validators, ValidationError
-
+from datetime           import datetime
+from flask_wtf          import FlaskForm
+from wtforms            import StringField, SubmitField, SelectMultipleField, Form, BooleanField, PasswordField, TextField, TextAreaField, SelectField, DateField, validators, ValidationError
+from wtforms            import validators, ValidationError
 from wtforms.validators import DataRequired
+
+
 ### ----------------------------------------------------------- ###
 #-------------------------------------------------------------------------------------------------------------------------------------------
 ## This class have the fields of a registration form

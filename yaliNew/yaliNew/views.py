@@ -5,47 +5,32 @@ Routes and views for the flask application.
 ### ----------------------------------------------------------- ###
 ### --- include all software packages and libraries needed ---- ###
 ### ----------------------------------------------------------- ###
-from datetime import datetime
-from flask import render_template
-from yaliNew import app
-from yaliNew.Models.LocalDatabaseRoutines import create_LocalDatabaseServiceRoutines
-
-from datetime import datetime
-from flask import render_template, redirect, request
-
-from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired
-
-import numpy as np
+import numpy             as np
 import matplotlib.pyplot as plt
-import pandas as pd
-
+import pandas            as pd
 import json 
 import requests
-
 import io
 import base64
 
-from os import path
 
-from flask   import Flask, render_template, flash, request
-from wtforms import Form, BooleanField, StringField, PasswordField, validators
-from wtforms import TextField, TextAreaField, SubmitField, SelectField, DateField
-from wtforms import ValidationError
-
-from yaliNew.Models.QueryFormStructure import UserRegistrationFormStructure 
-from yaliNew.Models.QueryFormStructure import LoginFormStructure 
-from yaliNew.Models.QueryFormStructure import OlympicMedals
-db_Functions = create_LocalDatabaseServiceRoutines() 
-
-import matplotlib.pyplot as plt
-from matplotlib.figure import Figure
-from yaliNew.Models.plot_service_functions import plot_to_img
-from yaliNew.Models.plot_service_functions import get_NOC_choices
-
+from datetime                              import datetime
+from yaliNew                               import app
+from yaliNew.Models.LocalDatabaseRoutines  import create_LocalDatabaseServiceRoutines
+from datetime                              import datetime
+from flask                                 import Flask, render_template, redirect, flash, request
+from flask_wtf                             import FlaskForm
+from wtforms                               import StringField, SubmitField
+from wtforms.validators                    import DataRequired
+from matplotlib.figure                     import Figure
+from os                                    import path
+from wtforms                               import Form, BooleanField, StringField, PasswordField, validators, ValidationError, TextField, TextAreaField, SubmitField, SelectField, DateField
+from yaliNew.Models.QueryFormStructure     import UserRegistrationFormStructure, LoginFormStructure, OlympicMedals
+from yaliNew.Models.plot_service_functions import plot_to_img, get_NOC_choices
 from flask_bootstrap import Bootstrap
 bootstrap = Bootstrap(app)
+db_Functions = create_LocalDatabaseServiceRoutines() 
+
 
 # Landing page - Home page
 @app.route('/')
