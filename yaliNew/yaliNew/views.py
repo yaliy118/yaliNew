@@ -1,10 +1,9 @@
 """
 Routes and views for the flask application.
 """
+# ---------------------------------------------------------------------------------------------------------------------------
+# Include all software packages and libraries needed 
 
-### ----------------------------------------------------------- ###
-### --- include all software packages and libraries needed ---- ###
-### ----------------------------------------------------------- ###
 import numpy             as np
 import matplotlib.pyplot as plt
 import pandas            as pd
@@ -27,11 +26,11 @@ from os                                    import path
 from wtforms                               import Form, BooleanField, StringField, PasswordField, validators, ValidationError, TextField, TextAreaField, SubmitField, SelectField, DateField
 from yaliNew.Models.QueryFormStructure     import UserRegistrationFormStructure, LoginFormStructure, OlympicMedals
 from yaliNew.Models.plot_service_functions import plot_to_img, get_NOC_choices
-from flask_bootstrap import Bootstrap
+from flask_bootstrap                       import Bootstrap
 bootstrap = Bootstrap(app)
 db_Functions = create_LocalDatabaseServiceRoutines() 
 
-
+# ---------------------------------------------------------------------------------------------------------------------------
 # Landing page - Home page
 @app.route('/')
 def Home():
@@ -40,7 +39,7 @@ def Home():
         title='Home Page',
         year=datetime.now().year,
     )
-
+# ---------------------------------------------------------------------------------------------------------------------------
 # Contact page - website creator details
 @app.route('/Contact')
 def Contact():
@@ -50,7 +49,7 @@ def Contact():
         year=datetime.now().year,
         message='Your contact page.'
     )
-
+# ---------------------------------------------------------------------------------------------------------------------------
 # About Page - explanation about the site
 @app.route('/About')
 def About():
@@ -60,13 +59,10 @@ def About():
         year=datetime.now().year,
         message='Your application description page.'
     )
-
-
-# -------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------------------
 # Register new user page
 # This function will get user details, will check if the user already exists
 # and if not, it will save the details in the users data base
-# -------------------------------------------------------
 @app.route('/Register', methods=['GET', 'POST'])
 def Register():
     form = UserRegistrationFormStructure(request.form)
@@ -87,7 +83,7 @@ def Register():
         year=datetime.now().year,
         repository_name='Pandas',
         )
-
+# ---------------------------------------------------------------------------------------------------------------------------
 # Data model description, used by the site and leads to DataSet page
 @app.route('/DataModel')
 def DataModel():
@@ -97,7 +93,7 @@ def DataModel():
         year=datetime.now().year,
         message='In this page we will display the datasets we are going to use in order to answer ARE THERE UFOs'
     )
-
+# ---------------------------------------------------------------------------------------------------------------------------
 # Data Set page, will show the data table
 @app.route('/DataSet1')
 def DataSet1():
@@ -111,14 +107,12 @@ def DataSet1():
         year=datetime.now().year,
         message='Data Set'
     )
-
-
-# -------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------------------
 # Login page
 # This page is the filter before the data analysis
 # This function will get user details (username, password), will check if the user exists in the user data base,
 # if yes - the user will go to data query page, if not - the site will show an error massege.
-# -------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------------------
 @app.route('/Login', methods=['GET', 'POST'])
 def Login():
     form = LoginFormStructure(request.form)
@@ -137,9 +131,7 @@ def Login():
         year=datetime.now().year,
         repository_name='Pandas',
         )
-
-
-
+# ---------------------------------------------------------------------------------------------------------------------------
 # Data Query page, will show four graphs of data analysis according to user requests
 @app.route('/Query' , methods = ['GET' , 'POST'])
 def Query():
@@ -398,8 +390,7 @@ def Query():
         ax = fig.add_subplot(111)
         dfBronze.plot(kind = KindofGraph, ax = ax)
         chart_Bronze = plot_to_img(fig)
-        #------------------------------------------
-                
+        #------------------------------------------         
     return render_template(
         'Query.html',
         title='Data Query',
@@ -408,5 +399,5 @@ def Query():
         chart_Silver = chart_Silver,
         chart_Bronze = chart_Bronze,
         form1 = form1
-        
     )
+# ---------------------------------------------------------------------------------------------------------------------------

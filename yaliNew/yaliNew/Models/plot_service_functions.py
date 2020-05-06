@@ -1,6 +1,5 @@
-### ----------------------------------------------------------- ###
-### --- include all software packages and libraries needed ---- ###
-### ----------------------------------------------------------- ###
+#-----------------------------------------------------------------------------------------------------------------------------------------------
+# Include all software packages and libraries needed
 import base64
 import io
 import datetime
@@ -11,8 +10,6 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure               import Figure
 from os                              import path
-
-
 #-----------------------------------------------------------------------------------------------------------------------------------------------
 # A Graph ------------------> A Picture
 def plot_case_1(df , kind):
